@@ -1,6 +1,8 @@
 package com.wyy.wanandroidcilent.adapter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.ui.ArticleDetailActivity;
+import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +65,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     Intent intent = new Intent(viewGroup.getContext(), ArticleDetailActivity.class);
                     Article article = mArticleList.get(holder.getAdapterPosition());
+                    article.setRead(true);                                          //将文章设置为已读
+                    notifyDataSetChanged();                                         //告知适配器数据发生变化
+                    SharedPreferencesUtil.outputWithSharePreference                 //将已读文章的title以键值对(title-true)形式存入"have_read"
+                            (viewGroup.getContext(),SharedPreferencesUtil.HAVE_READ_FILE,article.getTitle(),true);
                     intent.putExtra("link",article.getLink());              //向下一活动传输link
                     viewGroup.getContext().startActivity(intent);
                 }
@@ -82,6 +89,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             holder.superChapterNameTextView.setText(article.getAuthor());
             holder.niceDateTextView.setText(article.getNiceDate());
             holder.titleTextView.setText(article.getTitle());
+            if(article.isRead()){
+                holder.titleTextView.setTextColor(Color.parseColor("#CCCCCC"));
+            }else{
+                holder.titleTextView.setTextColor(Color.parseColor("#000000"));
+            }
             holder.chapterNameTextView.setText(article.getChapterName() + "/" + article.getSuperChapterName());
         }
     }

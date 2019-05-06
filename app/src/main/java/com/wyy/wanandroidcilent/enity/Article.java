@@ -1,5 +1,8 @@
 package com.wyy.wanandroidcilent.enity;
 
+import com.wyy.wanandroidcilent.app.MyApplication;
+import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
+
 public class Article {
 
     private String author;
@@ -17,7 +20,7 @@ public class Article {
         setNiceDate(niceDate);
         setSuperChapterName(superChapterName);
         setTitle(title);                        //在set方法中添加逻辑判断转化一些奇怪的字符
-        isRead = false;
+        initRead();
     }
 
     public Article(){}
@@ -83,5 +86,9 @@ public class Article {
 
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    private void initRead(){
+        isRead = SharedPreferencesUtil.getBooleanWithSharePreference(MyApplication.getContext(),SharedPreferencesUtil.HAVE_READ_FILE,title);
     }
 }
