@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageButton
+            android:id="@+id/ibtn_back"
+            android:layout_gravity="bottom"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:src="@mipmap/back"
+            />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_gravity="bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入关键词"
+            />
+
+        <ImageButton
+            android:id="@+id/ibtn_search"
+            android:layout_gravity="bottom"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/search"
+            android:background="@color/colorPrimary"
+            />
+    </LinearLayout>
+</LinearLayout>
