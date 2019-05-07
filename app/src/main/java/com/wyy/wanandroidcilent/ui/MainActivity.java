@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.wyy.wanandroidcilent.R;
+import com.wyy.wanandroidcilent.base.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,8 +8,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.wyy.wanandroidcilent.R;
+import com.wyy.wanandroidcilent.base.BaseActivity;
 
-public class ArticleDetailActivity extends AppCompatActivity {
+public class ArticleDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

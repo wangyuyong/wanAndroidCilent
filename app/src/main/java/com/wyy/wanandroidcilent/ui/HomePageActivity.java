@@ -1,60 +1,30 @@
 package com.wyy.wanandroidcilent.ui;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.FrameLayout;
 import com.wyy.wanandroidcilent.R;
-import com.wyy.wanandroidcilent.adapter.ArticleAdapter;
-import com.wyy.wanandroidcilent.enity.Article;
-import com.wyy.wanandroidcilent.net.HttpCallBack;
-import com.wyy.wanandroidcilent.utils.HttpUtil;
-import com.wyy.wanandroidcilent.utils.ParaseUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Thread.*;
-
+import com.wyy.wanandroidcilent.base.BaseActivity;
+import com.wyy.wanandroidcilent.utils.StateUtil;
 
 //app主页，完成登录后进入此界面
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends BaseActivity {
 
-    RecyclerView articleRv;
-    ArticleAdapter adapter;
-    LinearLayoutManager manager;
-    List<Article> articles = new ArrayList<>();
-    int i;
+    FrameLayout homePageLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        homePageLayout = (FrameLayout)findViewById(R.id.home_page);
 
-        articleRv = (RecyclerView)findViewById(R.id.rv_article);
-        adapter = new ArticleAdapter(articles);
-        manager = new LinearLayoutManager(HomePageActivity.this);
-        articleRv.setLayoutManager(manager);
-        articleRv.setAdapter(adapter);
-        i = 0;
-
-        articleRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView,dx,dy);
-
-                if(manager.findLastVisibleItemPosition() == adapter.getItemCount() - 1){
-                    String adress = "https://www.wanandroid.com/article/list/" + i +"/json";
-                    HttpUtil.sendHttpRequest(adress,new DataCallBack());
-                    i++;
-                }
-            }
-        });
+        if(StateUtil.isNetworkConnected(this)){
+            addFragmentToLayout(R.id.home_page,new ArticleListFragment());
+        }else {
+            addFragmentToLayout(R.id.home_page,new NoInternetFragment());
+        }
     }
 
     @Override
@@ -73,23 +43,5 @@ public class HomePageActivity extends AppCompatActivity {
             default:
         }
         return true;
-    }
-
-    private class DataCallBack implements HttpCallBack{
-        @Override
-        public void onFinish(String respone) {          //将回调数据解析并显示到界面上
-            ParaseUtil.paraseJSONToArticle(respone,articles);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.notifyDataSetChanged();
-                }
-            });
-        }
-
-        @Override
-        public void onError(Exception e) {
-            e.printStackTrace();
-        }
     }
 }

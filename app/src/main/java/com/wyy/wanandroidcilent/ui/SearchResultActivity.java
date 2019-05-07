@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.adapter.ArticleAdapter;
+import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
 import com.wyy.wanandroidcilent.utils.HttpUtil;
@@ -20,7 +21,7 @@ import com.wyy.wanandroidcilent.utils.ParaseUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResultActivity extends AppCompatActivity {
+public class SearchResultActivity extends BaseActivity {
     RecyclerView searchResultRv;
     List<Article> articles;
     LinearLayoutManager manager;

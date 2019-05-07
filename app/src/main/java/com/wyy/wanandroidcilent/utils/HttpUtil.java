@@ -1,5 +1,8 @@
 package com.wyy.wanandroidcilent.utils;
 
+import android.widget.Toast;
+
+import com.wyy.wanandroidcilent.app.MyApplication;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
 
 import java.io.BufferedReader;
@@ -19,6 +22,10 @@ public class HttpUtil {
      * @param listener(数据回调接口)
      */
     public static void sendHttpRequest(final String adress, final HttpCallBack listener){
+        if(!StateUtil.isNetworkConnected(MyApplication.getContext())){
+            Toast.makeText(MyApplication.getContext(),"网络连接不良，请检查您的网络设置",Toast.LENGTH_LONG).show();
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -58,6 +65,10 @@ public class HttpUtil {
      * @param listener(数据回调接口)
      */
     public static void sendHttpRequestByPost(final String adress, final String postData,final HttpCallBack listener){
+        if(!StateUtil.isNetworkConnected(MyApplication.getContext())){
+            Toast.makeText(MyApplication.getContext(),"网络连接不良，请检查您的网络设置",Toast.LENGTH_LONG).show();
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {

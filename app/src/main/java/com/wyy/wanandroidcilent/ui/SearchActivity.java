@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.wyy.wanandroidcilent.R;
+import com.wyy.wanandroidcilent.base.BaseActivity;
+import com.wyy.wanandroidcilent.utils.StateUtil;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
     ImageButton backIbtn;
     EditText searchEt;
@@ -37,10 +40,14 @@ public class SearchActivity extends AppCompatActivity {
         searchIbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchText = searchEt.getText().toString();
-                Intent intent = new Intent(SearchActivity.this,SearchResultActivity.class);
-                intent.putExtra("searchText",searchText);
-                startActivity(intent);
+                if(StateUtil.isNetworkConnected(SearchActivity.this)) {
+                    String searchText = searchEt.getText().toString();
+                    Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
+                    intent.putExtra("searchText", searchText);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(SearchActivity.this,"网络连接不良，请检查网络设置",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
