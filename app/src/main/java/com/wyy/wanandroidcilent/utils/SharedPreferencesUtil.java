@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 public class SharedPreferencesUtil {
 
     public static final String HAVE_READ_FILE = "have_read";            //已读文章的文章名存储的文件夹
+    public static final String COOKIE_FILE = "cookie";                  //存放cookie的文件夹
 
     /**
      *
@@ -21,7 +22,12 @@ public class SharedPreferencesUtil {
         editor.putBoolean(key,value);
         editor.apply();
     }
-
+    public static void outputWithSharePreference(Context context,String file,String key,String value){
+        SharedPreferences output = context.getSharedPreferences(file,0);
+        SharedPreferences.Editor editor = output.edit();
+        editor.putString(key,value);
+        editor.apply();
+    }
     /**
      *
      * @param context
@@ -32,5 +38,10 @@ public class SharedPreferencesUtil {
     public static boolean getBooleanWithSharePreference(Context context,String file,String key){
         SharedPreferences input = context.getSharedPreferences(file,0);
         return input.getBoolean(key,false);
+    }
+
+    public static String getStringWithSharePreference(Context context,String file,String key){
+        SharedPreferences input = context.getSharedPreferences(file,0);
+        return input.getString(key,"");
     }
 }

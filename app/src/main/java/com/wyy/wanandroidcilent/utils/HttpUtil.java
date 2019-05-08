@@ -1,18 +1,13 @@
 package com.wyy.wanandroidcilent.utils;
 
 import android.widget.Toast;
-
 import com.wyy.wanandroidcilent.app.MyApplication;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class HttpUtil {
 
