@@ -1,6 +1,9 @@
 package com.wyy.wanandroidcilent.utils;
 
+import android.util.Log;
+
 import com.wyy.wanandroidcilent.enity.Article;
+import com.wyy.wanandroidcilent.enity.Banner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,5 +53,23 @@ public class ParaseUtil {
             }
         }
         return true;
+    }
+
+    public static void paraseJSONToBanner(String json, List<Banner> banners){
+        if(banners != null){
+            try{
+                JSONObject bannerJSON = new JSONObject(json);
+                JSONArray data = bannerJSON.getJSONArray("data");
+                for (int i = 0; i < data.length(); i++){
+                    JSONObject object = data.getJSONObject(i);
+                    String imagePath = object.getString("imagePath");
+                    String url = object.getString("url");
+                    Banner banner = new Banner(imagePath,url);
+                    banners.add(banner);
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

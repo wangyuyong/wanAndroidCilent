@@ -2,9 +2,7 @@ package com.wyy.wanandroidcilent.ui;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,23 +10,15 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.wyy.wanandroidcilent.R;
-import com.wyy.wanandroidcilent.app.MyApplication;
-import com.wyy.wanandroidcilent.enity.User;
+import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
 import com.wyy.wanandroidcilent.utils.HttpUtil;
 import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 import com.wyy.wanandroidcilent.utils.StateUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     Button loginBtn;
     Button registerBtn;
@@ -51,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginPb = (ProgressBar)findViewById(R.id.pb_login);                                          //获取实例
 
         loginBtn.setOnClickListener(this);
+        registerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -115,6 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void registe(){
-       //注册逻辑
+       Intent intent = new Intent(this,RegisteActivity.class);
+       startActivity(intent);
     }
 }
