@@ -11,6 +11,8 @@ import java.net.URL;
 
 public class HttpUtil {
 
+    public static final String WAN_ANDROID_LOGIN_ADRESS = "https://www.wanandroid.com/user/login";
+
     /**
      * @description 发送Http请求(GET)
      * @param adress(Http地址)
