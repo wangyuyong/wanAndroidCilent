@@ -2,8 +2,6 @@ package com.wyy.wanandroidcilent.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Message;
 import android.widget.Toast;
 import com.wyy.wanandroidcilent.app.MyApplication;
 import com.wyy.wanandroidcilent.enity.Banner;
@@ -39,7 +37,6 @@ public class HttpUtil {
             public void run() {
                 URL url = null;
                 HttpURLConnection connection = null;
-
                 try {
                     url = new URL(adress);
                     connection = (HttpURLConnection)url.openConnection();
@@ -49,15 +46,15 @@ public class HttpUtil {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder builder = new StringBuilder();
                     String line = null;
-                    while((line = reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         builder.append(line);
                     }
-                    if(listener != null){
+                    if (listener != null) {
                         listener.onFinish(builder.toString());
                     }
                 } catch (Exception e) {
-                    if(listener != null){
-                        listener.onError(e);
+                    if (listener != null){
+                        e.printStackTrace();
                     }
                 }finally {
                     connection.disconnect();

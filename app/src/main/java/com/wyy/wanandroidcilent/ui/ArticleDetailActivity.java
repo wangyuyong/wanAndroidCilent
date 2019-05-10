@@ -9,19 +9,34 @@ import android.webkit.WebViewClient;
 
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.base.BaseActivity;
+import com.wyy.wanandroidcilent.utils.StateUtil;
 
 public class ArticleDetailActivity extends BaseActivity {
+    WebView articleWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
-        WebView articleWebView = (WebView)findViewById(R.id.wb_article_detail);
+        articleWebView = (WebView)findViewById(R.id.wb_article_detail);
+        initWebView();
         Intent intent = getIntent();
         String link = intent.getStringExtra("link");
-        WebSettings settings = articleWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
         articleWebView.setWebViewClient(new WebViewClient());
         articleWebView.loadUrl(link);
+    }
+
+    private void initWebView(){
+        WebSettings settings = articleWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+
+        if(StateUtil.isNetworkConnected(this)){
+            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        }else {
+            settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
+        settings.setDatabaseEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAppCacheEnabled(true);
     }
 }
