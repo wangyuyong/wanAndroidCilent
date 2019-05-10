@@ -85,6 +85,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                         SharedPreferencesUtil.USER,"password",password);       //将用户名和密码存入本地
                                 Intent intent = new Intent(LoginActivity.this,
                                         HomePageActivity.class);
+                                intent.putExtra("username",userName);                       //向下一活动传送用户名
                                 startActivity(intent);                                              //完成登录
                                 finish();
                             }else {                                                                 //验证失败，提示用户

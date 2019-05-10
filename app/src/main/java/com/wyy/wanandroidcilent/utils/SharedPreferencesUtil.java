@@ -44,8 +44,6 @@ public class SharedPreferencesUtil {
         SharedPreferences input = context.getSharedPreferences(file,0);
         return input.getString(key,"");
     }
-
-
     /**
      *
      * @param context
