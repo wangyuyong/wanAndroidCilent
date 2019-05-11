@@ -1,12 +1,12 @@
 package com.wyy.wanandroidcilent.enity;
 
-public class Banner {
+public class BannerData {
     private String imagePath;
     private String url;
 
-    public Banner(){}
+    public BannerData(){}
 
-    public Banner(String imagePath,String url){
+    public BannerData(String imagePath, String url){
         this.imagePath = imagePath;
         this.url = url;
     }

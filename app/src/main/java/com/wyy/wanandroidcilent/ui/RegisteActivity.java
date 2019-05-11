@@ -31,16 +31,16 @@ public class RegisteActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_registe);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.hide();       //隐藏标题栏
 
         userNameEd = (EditText)findViewById(R.id.ed__registe_username);
         passwordEd = (EditText)findViewById(R.id.ed__registe_password);
         repasswordEd = (EditText)findViewById(R.id.ed__registe_repassword);
         confirmBtn = (Button)findViewById(R.id.btn_confirm);
-        cancelBtn = (Button)findViewById(R.id.btn_cancel);                                          //获取实列
+        cancelBtn = (Button)findViewById(R.id.btn_cancel);            //获取实列
 
         confirmBtn.setOnClickListener(this);
-        cancelBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);         //设置监听
     }
 
     @Override
@@ -59,8 +59,9 @@ public class RegisteActivity extends BaseActivity implements View.OnClickListene
     private void registeUser(){
         String userName = userNameEd.getText().toString();
         String password = passwordEd.getText().toString();
-        String repassword = repasswordEd.getText().toString();
+        String repassword = repasswordEd.getText().toString();          //获取用户输入
 
+        //发送网络请求
         HttpUtil.sendHttpRequestByPost(HttpUtil.WAN_ANDROID_REGISTE_ADRESS, "username=" +
                 userName + "&password=" + password + "&repassword=" + repassword, new HttpCallBack() {
             @Override
@@ -88,7 +89,8 @@ public class RegisteActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onError(Exception e) {
-                    e.printStackTrace();
+                tipNoInternet();                //提示用户网络连接超时
+                e.printStackTrace();
             }
         });
     }

@@ -25,8 +25,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int BOTTOM_ITEM = 0;               //item为底部View
     private static final int NORMAL_ITEM = 1;               //item为正常View
     private List<Article> mArticleList;
+    LinearLayout bottomItem;                                //记录底部item
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{            //正常item的ViewHolder
+    //正常item的ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         CardView articleCardView;
         TextView superChapterNameTextView;
         TextView niceDateTextView;
@@ -43,7 +45,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public static class BottomViewHolder extends RecyclerView.ViewHolder{              //底部item的ViewHolder
+    //底部item的ViewHolder
+    public static class BottomViewHolder extends RecyclerView.ViewHolder{
         LinearLayout linearLayoutItemBottom;
         public BottomViewHolder(View itemView) {
             super(itemView);
@@ -77,23 +80,25 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }else {                 //底部item加载相应的布局
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_item_bottom_view,viewGroup,false);
             BottomViewHolder holder = new BottomViewHolder(view);
+            bottomItem = holder.linearLayoutItemBottom;
             return holder;
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if(position < mArticleList.size()){
+        if(position < mArticleList.size()){                                      //ViewHolder的位置小于文章的数量，说明不是底部的ViewHolder
             Article article = mArticleList.get(position);
             ViewHolder holder = (ViewHolder)viewHolder;
             holder.superChapterNameTextView.setText(article.getAuthor());
             holder.niceDateTextView.setText(article.getNiceDate());
-            holder.titleTextView.setText(article.getTitle());
-            if(article.isRead()){
+            holder.titleTextView.setText(article.getTitle());                   //添加文章作者，时间，文章名
+            if(article.isRead()){                                               //若是已读，文章名显示为灰色
                 holder.titleTextView.setTextColor(Color.parseColor("#CCCCCC"));
             }else{
                 holder.titleTextView.setTextColor(Color.parseColor("#000000"));
             }
+            //添加文章的类型
             holder.chapterNameTextView.setText(article.getChapterName() + "/" + article.getSuperChapterName());
         }
     }
@@ -111,5 +116,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return BOTTOM_ITEM;
         }
     }
-
+    public void setBottomItemInVisible(){   //隐藏底部item
+        bottomItem.setVisibility(View.INVISIBLE);
+    }
 }

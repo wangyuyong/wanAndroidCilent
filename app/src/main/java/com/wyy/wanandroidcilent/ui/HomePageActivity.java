@@ -34,15 +34,17 @@ public class HomePageActivity extends BaseActivity {
         userNameTv = (TextView)slideMenu.findViewById(R.id.tv_user_name);
 
         Intent intent = getIntent();
-        String userName = intent.getStringExtra("username");                                //从上一活动中获取用户名
+        String userName = intent.getStringExtra("username"); //从上一活动中获取用户名
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.menu);
+        actionBar.setHomeAsUpIndicator(R.mipmap.menu);  //设置滑动菜单
 
-        if(StateUtil.isNetworkConnected(this)){
+        if(StateUtil.isNetworkConnected(this)){ //判断是否有网络
+            //有网络，加载文章界面
             addFragmentToLayout(R.id.home_page,new ArticleListFragment());
         }else {
+            //没有网络，加载没网界面
             addFragmentToLayout(R.id.home_page,new NoInternetFragment());
         }
 
@@ -51,7 +53,7 @@ public class HomePageActivity extends BaseActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.menu_logon:
-                        logon();
+                        logon();    //退出登录
                         break;
                     default:
                 }
@@ -70,25 +72,27 @@ public class HomePageActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                slideMenu.openDrawer(GravityCompat.START);
+                slideMenu.openDrawer(GravityCompat.START);  //打开滑动菜单
                 break;
             case R.id.search:
                 Intent intent = new Intent(this,SearchActivity.class);
-                startActivity(intent);
+                startActivity(intent);      //进入搜索界面
                 break;
             default:
         }
         return true;
     }
 
-    private void logon(){
+    private void logon(){       //退出登录
+        //从本地中删除用户信息
         SharedPreferencesUtil.deleteWithSharePreference(this,SharedPreferencesUtil.USER,
                 "username");
         SharedPreferencesUtil.deleteWithSharePreference(this,SharedPreferencesUtil.USER,
-                "password");                                                                   //从本地中删除用户信息
+                "password");
 
+        //返回登录界面
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
-        finish();                                                                                   //返回登录界面
+        finish();
     }
 }

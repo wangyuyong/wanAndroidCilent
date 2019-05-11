@@ -73,10 +73,21 @@ public class Article {
         if(title.indexOf("<") != -1){
             title = title.replaceAll("</?[^>]+>","");           //利用正则表达式取出html标签
         }
-        if(title.indexOf("&mdash;") == -1){
+        if(title.indexOf("&") == -1){                                               //不存在转义字符
             this.title = title;
-        }else {
-            this.title = title.replaceAll("&mdash;","—");       //将所有&mdash替换为-
+        }else {                                                                     //可能存在转义字符
+            if (title.indexOf("&mdash") != -1){
+                this.title = title.replaceAll("&mdash;","—");       //将所有&mdash;替换为-
+            }
+            if (title.indexOf("&quot;") != -1){
+                this.title = title.replaceAll("&quot;","\"");       //将所有&quot;替换为"
+            }
+            if (title.indexOf("&amp;") != -1){
+                this.title = title.replaceAll("&amp;","&");         //将所有&amp;替换为&
+            }
+            if (title.indexOf("&nbsp;") != -1){
+                this.title = title.replaceAll("&nbsp;"," ");        //将所有&nbsp;替换为空格
+            }
         }
     }
 
@@ -89,6 +100,7 @@ public class Article {
     }
 
     private void initRead(){
+        //从本地中查找该文章是否已读
         isRead = SharedPreferencesUtil.getBooleanWithSharePreference(MyApplication.getContext(),SharedPreferencesUtil.HAVE_READ_FILE,title);
     }
 }

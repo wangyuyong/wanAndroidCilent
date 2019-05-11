@@ -2,9 +2,8 @@ package com.wyy.wanandroidcilent.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.Toast;
-import com.wyy.wanandroidcilent.app.MyApplication;
-import com.wyy.wanandroidcilent.enity.Banner;
+import android.util.Log;
+import com.wyy.wanandroidcilent.enity.BannerData;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -14,24 +13,26 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
-
 public class HttpUtil {
 
+    //网络连接超时或失败的提示信息
+    public static final String NO_INTERNET = "网络连接不良，请检查您的网络";
+
+    //wan android登录api
     public static final String WAN_ANDROID_LOGIN_ADRESS = "https://www.wanandroid.com/user/login";
+
+    //wan android注册api
     public static final String WAN_ANDROID_REGISTE_ADRESS = "https://www.wanandroid.com/user/register";
+
+    //wan android banner api
     public static final String WAN_ANDROID_BANNER_ADRESS = "https://www.wanandroid.com/banner/json";
 
     /**
-     * @description 发送Http请求(GET)
+     * 发送Http请求(GET)
      * @param adress(Http地址)
      * @param listener(数据回调接口)
      */
     public static void sendHttpRequest(final String adress, final HttpCallBack listener){
-        if(!StateUtil.isNetworkConnected(MyApplication.getContext())){
-            Toast.makeText(MyApplication.getContext(),"网络连接不良，请检查您的网络设置",Toast.LENGTH_LONG).show();
-            return;
-        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -40,40 +41,40 @@ public class HttpUtil {
                 try {
                     url = new URL(adress);
                     connection = (HttpURLConnection)url.openConnection();
-                    connection.setConnectTimeout(8000);
-                    connection.setReadTimeout(8000);
+                    connection.setConnectTimeout(8000); //设置连接超时时间
+                    connection.setReadTimeout(8000);    //设置读写超时时间
                     connection.setRequestMethod("GET");
+
+                    //包装输入流为缓冲流
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder builder = new StringBuilder();
                     String line = null;
-                    while ((line = reader.readLine()) != null) {
+                    while ((line = reader.readLine()) != null) {    //读取数据
                         builder.append(line);
                     }
+
+                    //回调数据
                     if (listener != null) {
                         listener.onFinish(builder.toString());
                     }
                 } catch (Exception e) {
                     if (listener != null){
-                        e.printStackTrace();
+                        listener.onError(e);
                     }
                 }finally {
-                    connection.disconnect();
+                    connection.disconnect();    //关闭连接
                 }
             }
         }).start();
     }
 
     /**
-     *
+     * 发送http请求(post)
      * @param adress(Http地址)
-     * @param postData(post的数据)
+     * @param postData(参数)
      * @param listener(数据回调接口)
      */
     public static void sendHttpRequestByPost(final String adress, final String postData,final HttpCallBack listener){
-        if(!StateUtil.isNetworkConnected(MyApplication.getContext())){
-            Toast.makeText(MyApplication.getContext(),"网络连接不良，请检查您的网络设置",Toast.LENGTH_LONG).show();
-            return;
-        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -83,18 +84,24 @@ public class HttpUtil {
                     url = new URL(adress);
                     connection = (HttpURLConnection)url.openConnection();
                     connection.setRequestMethod("POST");
-                    connection.setReadTimeout(8000);
-                    connection.setConnectTimeout(8000);
+                    connection.setReadTimeout(8000);    //设置读写超时时间
+                    connection.setConnectTimeout(8000); //设置连接超时时间
+
                     DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-                    output.writeBytes(postData);
+                    output.writeBytes(postData);    //写出数据
                     output.flush();
-                    output.close();
+                    output.close();                 //保证数据全部写出
+
+                    //包装输入流为缓冲流
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder builder = new StringBuilder();
                     String line = null;
+                    //读取数据
                     while((line = reader.readLine()) != null){
                         builder.append(line);
                     }
+
+                    //回调数据
                     if(listener != null){
                         listener.onFinish(builder.toString());
                     }
@@ -103,6 +110,7 @@ public class HttpUtil {
                         listener.onError(e);
                     }
                 }finally {
+                    //关闭连接
                     if(connection != null){
                         connection.disconnect();
                     }
@@ -111,20 +119,21 @@ public class HttpUtil {
         }).start();
     }
 
-    public static void loadPictureFromNet(final List<Banner> banners, final List<Bitmap> bitmaps){
+    public static void loadPictureFromNet(final List<BannerData> bannerData, final List<Bitmap> bitmaps){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 URL url = null;
-                HttpsURLConnection connection = null;
+                HttpURLConnection connection = null;
                 try {
-                    for(int i =0; i < banners.size(); i++) {                                        //将banners转为为对应的图片
-                        url = new URL(banners.get(i).getImagePath());
-                        connection = (HttpsURLConnection) url.openConnection();
-                        connection.setRequestMethod("GET");
+                    for(int i = 0; i < bannerData.size(); i++) {                                        //将banners转为为对应的图片
+                        url = new URL(bannerData.get(i).getImagePath());
+                        connection = (HttpURLConnection) url.openConnection();
                         connection.setDoInput(true);
+                        connection.connect();
                         InputStream input = connection.getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(input);
+                        Log.d("bitmap",bitmap.toString());
                         bitmaps.add(bitmap);
                     }
                 }catch (Exception e){

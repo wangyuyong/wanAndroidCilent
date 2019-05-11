@@ -3,21 +3,21 @@ package com.wyy.wanandroidcilent.utils;
 import android.util.Log;
 
 import com.wyy.wanandroidcilent.enity.Article;
-import com.wyy.wanandroidcilent.enity.Banner;
+import com.wyy.wanandroidcilent.enity.BannerData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParaseUtil {
 
     /**
-     * @description 解析JSON数据并返回Article数组
+     * 解析JSON数据
      * @param json
-     * @return List<Article>
+     * @param articles
+     * @return
      */
     public static boolean paraseJSONToArticle(String json,List<Article> articles){
         if(articles != null){
@@ -37,7 +37,8 @@ public class ParaseUtil {
                 String superChapterName;
                 String title;
 
-                for(int i = 0; i < datas.length(); i++){                //将datas数组中对应键的键值取出并构造article对象，将该对象加入articles容器中
+                //将datas数组中对应键的键值取出并构造article对象，将该对象加入articles容器中
+                for(int i = 0; i < datas.length(); i++){
                     JSONObject articleJSON = datas.getJSONObject(i);
                     author = articleJSON.getString("author");
                     chapterName = articleJSON.getString("chapterName");
@@ -55,17 +56,19 @@ public class ParaseUtil {
         return true;
     }
 
-    public static void paraseJSONToBanner(String json, List<Banner> banners){
-        if(banners != null){
+    public static void paraseJSONToBanner(String json, List<BannerData> bannerDatas){
+        if(bannerDatas != null){
             try{
                 JSONObject bannerJSON = new JSONObject(json);
                 JSONArray data = bannerJSON.getJSONArray("data");
                 for (int i = 0; i < data.length(); i++){
                     JSONObject object = data.getJSONObject(i);
                     String imagePath = object.getString("imagePath");
+                    Log.d("imagePath",imagePath);
                     String url = object.getString("url");
-                    Banner banner = new Banner(imagePath,url);
-                    banners.add(banner);
+                    Log.d("url",url);
+                    BannerData bannerData = new BannerData(imagePath,url);
+                    bannerDatas.add(bannerData);
                 }
             }catch(Exception e){
                 e.printStackTrace();

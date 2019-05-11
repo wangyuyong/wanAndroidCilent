@@ -10,7 +10,7 @@ public class SharedPreferencesUtil {
     public static final String USER = "user";                                                       //存放用户名和密码的文件夹
 
     /**
-     *
+     * 将key-value存入file
      * @param context
      * @param file(存储的路径)
      * @param key(键)
@@ -29,7 +29,7 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
     /**
-     *
+     * 从file中取出key对应的布尔值
      * @param context
      * @param file
      * @param key
@@ -40,12 +40,19 @@ public class SharedPreferencesUtil {
         return input.getBoolean(key,false);
     }
 
+    /**
+     * 从file中取出key对应的字符串
+     * @param context
+     * @param file
+     * @param key
+     * @return
+     */
     public static String getStringWithSharePreference(Context context,String file,String key){
         SharedPreferences input = context.getSharedPreferences(file,0);
         return input.getString(key,"");
     }
     /**
-     *
+     * 删除file中key - value
      * @param context
      * @param file
      * @param key

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.utils.StateUtil;
 
@@ -21,6 +20,7 @@ public class NoInternetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_no_internet,container,false);
 
+        //注册重新加载按钮的监听器
         tryAgainButton = (Button)view.findViewById(R.id.btn_try_again);
         tryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +36,7 @@ public class NoInternetFragment extends Fragment {
         return view;
     }
 
+    //切换碎片
     private void replaceFragment(Fragment fragment){
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

@@ -19,9 +19,9 @@ public class ArticleDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
         articleWebView = (WebView)findViewById(R.id.wb_article_detail);
-        initWebView();
+        initWebView();                      //对WebView进行配置
         Intent intent = getIntent();
-        String link = intent.getStringExtra("link");
+        String link = intent.getStringExtra("link");        //得到上一活动传送的数据
         articleWebView.setWebViewClient(new WebViewClient());
         articleWebView.loadUrl(link);
     }
@@ -30,6 +30,7 @@ public class ArticleDetailActivity extends BaseActivity {
         WebSettings settings = articleWebView.getSettings();
         settings.setJavaScriptEnabled(true);
 
+        //设置缓存模式
         if(StateUtil.isNetworkConnected(this)){
             settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         }else {
@@ -37,6 +38,6 @@ public class ArticleDetailActivity extends BaseActivity {
         }
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);
-        settings.setAppCacheEnabled(true);
+        settings.setAppCacheEnabled(true);                  //设置缓存
     }
 }
