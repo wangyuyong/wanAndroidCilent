@@ -1,30 +1,27 @@
 package com.wyy.wanandroidcilent.adapter;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.enity.Article;
-import com.wyy.wanandroidcilent.ui.ArticleDetailActivity;
-import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 import com.wyy.wanandroidcilent.widget.Banner;
 
 import java.util.List;
 
+//扩展ArticleAdapter,在其顶部添加Banner控件
 public class ArticleBannerAdapter extends ArticleAdapter {
-    public static final int TOP_ITEM = 2;      //顶部Holder
+    public static final int TOP_ITEM = 2;      //顶部Item
     private Banner banner;
 
+    //必须提供初始化好的Banner控件
     public ArticleBannerAdapter(List<Article> articles,Banner banner){
         super(articles);
         this.banner = banner;
     }
 
+    //Banner控件的ViewHolder
     static class BannerViewHolder extends RecyclerView.ViewHolder{
         public BannerViewHolder(View itemView) {
             super(itemView);
@@ -33,11 +30,13 @@ public class ArticleBannerAdapter extends ArticleAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        //如果是顶部Item,则创建Banner的ViewHolder
         if(viewType == TOP_ITEM){
             BannerViewHolder viewHolder = new BannerViewHolder(banner);
             return viewHolder;
         }
 
+        //其他Item则调用父类方法
         return super.onCreateViewHolder(viewGroup,viewType);
     }
 
@@ -61,6 +60,7 @@ public class ArticleBannerAdapter extends ArticleAdapter {
 
     @Override
     public int getItemCount() {
+        //增加了Banner,返回的Item数量要多加1
         return super.getItemCount() + 1;
     }
 

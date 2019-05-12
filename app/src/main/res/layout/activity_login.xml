@@ -12,16 +12,28 @@
         android:visibility="gone"
         />
 
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="登录"
+        android:textColor="@color/black"
+        android:background="@android:color/holo_red_light"
+        />
+
     <LinearLayout
         android:id="@+id/linearlayout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_above="@id/btn_login"
+        android:layout_marginBottom="35dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="60dp"
             android:text="密码"
             android:textColor="@color/black"
             />
@@ -31,8 +43,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="60dp"
             android:inputType="textPassword"
+            android:maxLength="12"
+            android:hint="请输入6 ~ 12位密码"
             />
     </LinearLayout>
 
@@ -45,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="60dp"
             android:text="用户名"
             android:textColor="@color/black"
             />
@@ -55,33 +69,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="60dp"
+            android:maxLength="12"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="请输入6 ~ 12位的字母或数字"
             />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearlayout_password"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:text="登录"
-        android:textColor="@color/black"
-        android:background="@android:color/transparent"
-        />
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_login"
-        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:text="注册"
         android:textColor="@color/black"
-        android:background="@android:color/transparent"
+        android:background="@android:color/holo_red_light"
         />
 
 </RelativeLayout>

@@ -3,11 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp"
+        android:text="确认"
+        android:textColor="@color/black"
+        android:background="@android:color/holo_red_light"
+        />
+
     <LinearLayout
         android:id="@+id/linearlayout_registe_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_above="@id/linearlayout_registe_repassword">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,6 +35,8 @@
             android:layout_weight="1"
             android:layout_marginRight="70dp"
             android:inputType="textPassword"
+            android:hint="请输入6 ~ 12密码"
+            android:maxLength="12"
             />
     </LinearLayout>
 
@@ -47,6 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginRight="70dp"
+            android:hint="请输入6 ~ 12为字母或数字"
+            android:maxLength="12"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             />
 
     </LinearLayout>
@@ -55,7 +71,7 @@
         android:id="@+id/linearlayout_registe_repassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearlayout_registe_password">
+        android:layout_above="@id/btn_confirm">
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,32 +88,22 @@
             android:layout_weight="1"
             android:layout_marginRight="70dp"
             android:inputType="textPassword"
+            android:hint="请再次确认密码"
+            android:maxLength="12"
             />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearlayout_registe_repassword"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:text="确认"
-        android:textColor="@color/black"
-        android:background="@android:color/transparent"
-        />
 
     <Button
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_confirm"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:text="取消"
         android:textColor="@color/black"
-        android:background="@android:color/transparent"
+        android:background="@android:color/holo_red_light"
         />
 
 </RelativeLayout>

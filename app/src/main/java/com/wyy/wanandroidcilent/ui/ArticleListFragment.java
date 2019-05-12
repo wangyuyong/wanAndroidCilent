@@ -1,6 +1,5 @@
 package com.wyy.wanandroidcilent.ui;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.wyy.wanandroidcilent.R;
-import com.wyy.wanandroidcilent.adapter.ArticleAdapter;
 import com.wyy.wanandroidcilent.adapter.ArticleBannerAdapter;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.enity.BannerData;
@@ -40,12 +38,14 @@ public class ArticleListFragment extends Fragment {
     List<BannerData> bannerData;
     List<Bitmap> bitmaps;
 
-    int i;
+    int i;              //页数
+    int w;              //下拉刷新时，i重置为0，记录i重置前的数据
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_list,container,false);
 
+        //创建Banner
         banner = new Banner(getActivity());
         bannerData = new ArrayList<>();
         bitmaps = new ArrayList<>();
@@ -79,8 +79,8 @@ public class ArticleListFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                w = i;                                    //记录i的数据，网络访问失败时，返回i的数据
                 i = 0;                                   //i重置为0
-                articles.removeAll(articles);           //清空articles
                 //重新请求网络刷新数据
                 String adress = "https://www.wanandroid.com/article/list/" + i +"/json";
                 HttpUtil.sendHttpRequest(adress,new RefreshCallBack());
@@ -118,7 +118,8 @@ public class ArticleListFragment extends Fragment {
 
     private class RefreshCallBack implements HttpCallBack {
         @Override
-        public void onFinish(String respone) {                          //将回调数据解析并显示到界面上
+        public void onFinish(String respone) {
+            articles.removeAll(articles);                               //清空articles
             ParaseUtil.paraseJSONToArticle(respone,articles);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -138,17 +139,22 @@ public class ArticleListFragment extends Fragment {
                     //通知用户网络连接超时
                     Toast.makeText(getActivity(),HttpUtil.NO_INTERNET,Toast.LENGTH_LONG).show();
                     refresh.setRefreshing(false);                           //刷新结束
+                    i = w;                  //返回i的数据
                 }
             });
             e.printStackTrace();
         }
     }
 
+    //初始化Banner
    private void initBanner(){
+        //发送网络请求
         HttpUtil.sendHttpRequest(HttpUtil.WAN_ANDROID_BANNER_ADRESS, new HttpCallBack() {
             @Override
             public void onFinish(String respone) {
+                //解析数据
                 ParaseUtil.paraseJSONToBanner(respone,bannerData);
+                //将得到数据中的图片地址加载为Bitmap对象
                 loadPictureFromNet(bannerData,bitmaps);
             }
 
@@ -158,6 +164,7 @@ public class ArticleListFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //提示用户网络连接超时
                         Toast.makeText(getActivity(),HttpUtil.NO_INTERNET,Toast.LENGTH_LONG).show();
                     }
                 });
@@ -172,20 +179,19 @@ public class ArticleListFragment extends Fragment {
                 URL url = null;
                 HttpURLConnection connection = null;
                 try {
-                    for(int i = 0; i < bannerData.size(); i++) {                                        //将banners转为为对应的图片
+                    for(int i = 0; i < bannerData.size(); i++) {         //将banners转为为对应的Bitmap对象
                         url = new URL(bannerData.get(i).getImagePath());
                         connection = (HttpURLConnection) url.openConnection();
                         connection.setDoInput(true);
                         connection.connect();
                         InputStream input = connection.getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(input);
-                        Log.d("bitmap",bitmap.toString());
                         bitmaps.add(bitmap);
                     }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            banner.initViews(getActivity(),bitmaps);
+                            banner.initViews(getActivity(),bitmaps,bannerData);    //初始化Banner中view数组
                         }
                     });
                 }catch (Exception e){

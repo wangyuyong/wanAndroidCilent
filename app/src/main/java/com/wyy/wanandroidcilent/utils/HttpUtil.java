@@ -118,32 +118,4 @@ public class HttpUtil {
             }
         }).start();
     }
-
-    public static void loadPictureFromNet(final List<BannerData> bannerData, final List<Bitmap> bitmaps){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                URL url = null;
-                HttpURLConnection connection = null;
-                try {
-                    for(int i = 0; i < bannerData.size(); i++) {                                        //将banners转为为对应的图片
-                        url = new URL(bannerData.get(i).getImagePath());
-                        connection = (HttpURLConnection) url.openConnection();
-                        connection.setDoInput(true);
-                        connection.connect();
-                        InputStream input = connection.getInputStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(input);
-                        Log.d("bitmap",bitmap.toString());
-                        bitmaps.add(bitmap);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }finally {
-                    if (connection != null){
-                        connection.disconnect();
-                    }
-                }
-            }
-        }).start();
-    }
 }

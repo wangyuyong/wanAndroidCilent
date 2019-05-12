@@ -20,7 +20,7 @@ import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-//首页文章的适配器
+//文章列表的适配器
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int BOTTOM_ITEM = 0;               //item为底部View
     public static final int NORMAL_ITEM = 1;               //item为正常View
@@ -60,7 +60,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int viewType) {
-        if(viewType == NORMAL_ITEM){                //如果是正常的item,加载对应的布局并添加监听
+        if(viewType == NORMAL_ITEM){
+            //如果是正常的item,加载对应的布局并添加监听
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_article,viewGroup,false);
             final ViewHolder holder = new ViewHolder(view);
             holder.articleCardView.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +78,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
             return holder;
-        }else {                 //底部item加载相应的布局
+        }else {
+            //底部item加载相应的布局
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_item_bottom_view,viewGroup,false);
             BottomViewHolder holder = new BottomViewHolder(view);
             bottomItem = holder.linearLayoutItemBottom;
