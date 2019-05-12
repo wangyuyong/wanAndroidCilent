@@ -22,9 +22,9 @@ import java.util.List;
 
 //首页文章的适配器
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int BOTTOM_ITEM = 0;               //item为底部View
-    private static final int NORMAL_ITEM = 1;               //item为正常View
-    private List<Article> mArticleList;
+    public static final int BOTTOM_ITEM = 0;               //item为底部View
+    public static final int NORMAL_ITEM = 1;               //item为正常View
+    protected List<Article> mArticleList;
     LinearLayout bottomItem;                                //记录底部item
 
     //正常item的ViewHolder

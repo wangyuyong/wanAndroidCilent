@@ -9,21 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.adapter.BannerAdapter;
-import com.wyy.wanandroidcilent.app.MyApplication;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class Banner extends FrameLayout {
     ViewPager bannerVp;
     PagerAdapter adapter;
     List<View> views;
-    public Banner(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public Banner(Context context) {
+        super(context);
         LayoutInflater.from(context).inflate(R.layout.widget_banner,this);
         views = new ArrayList<>();
 
@@ -32,14 +28,16 @@ public class Banner extends FrameLayout {
         bannerVp.setAdapter(adapter);
     }
 
-    public void initViews(List<Bitmap> bitmaps){
+    public void initViews(Context context,List<Bitmap> bitmaps){
         for(int i = 0; i < bitmaps.size(); i++){
             Bitmap bitmap = bitmaps.get(i);
-            View view = View.inflate(MyApplication.getContext(),R.layout.adapter_item_banner,bannerVp);
-            ImageView picture = (ImageView)findViewById(R.id.iv_banner);
+            View view = View.inflate(context,R.layout.adapter_item_banner,null);
+            ImageView picture = (ImageView)view.findViewById(R.id.iv_banner);
             picture.setImageBitmap(bitmap);
             views.add(view);
         }
         adapter.notifyDataSetChanged();
     }
+
+
 }
