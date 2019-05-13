@@ -1,13 +1,12 @@
 package com.wyy.wanandroidcilent.ui;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.base.BaseActivity;
@@ -19,6 +18,7 @@ import org.json.JSONObject;
 
 public class RegisteActivity extends BaseActivity implements View.OnClickListener {
 
+    Toolbar toolbar;
     EditText userNameEd;
     EditText passwordEd;
     EditText repasswordEd;
@@ -30,8 +30,8 @@ public class RegisteActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registe);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();       //隐藏标题栏
+        toolbar = (Toolbar)findViewById(R.id.toolbar_registe);
+        setSupportActionBar(toolbar);
 
         userNameEd = (EditText)findViewById(R.id.ed__registe_username);
         passwordEd = (EditText)findViewById(R.id.ed__registe_password);

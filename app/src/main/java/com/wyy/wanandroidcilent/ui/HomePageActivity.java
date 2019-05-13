@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
@@ -23,11 +25,16 @@ public class HomePageActivity extends BaseActivity {
     DrawerLayout slideMenu;
     NavigationView menuNav;
     TextView userNameTv;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar_home_page);
+        setSupportActionBar(toolbar);
+
         slideMenu = (DrawerLayout)findViewById(R.id.dl_slide_menu);
         homePageLayout = (FrameLayout)findViewById(R.id.home_page);
         menuNav = (NavigationView)findViewById(R.id.nav_slide);

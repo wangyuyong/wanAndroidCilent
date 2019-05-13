@@ -1,27 +1,28 @@
 package com.wyy.wanandroidcilent.ui;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.adapter.ArticleAdapter;
+import com.wyy.wanandroidcilent.adapter.OnItemClickListener;
 import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
 import com.wyy.wanandroidcilent.utils.HttpUtil;
 import com.wyy.wanandroidcilent.utils.ParaseUtil;
+import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResultActivity extends BaseActivity {
+public class SearchResultActivity extends BaseActivity implements OnItemClickListener {
+    Toolbar toolbar;
     RecyclerView searchResultRv;
     List<Article> articles;
     LinearLayoutManager manager;
@@ -34,15 +35,20 @@ public class SearchResultActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
+        toolbar = (Toolbar)findViewById(R.id.toolbar_search_result);
+        setSupportActionBar(toolbar);
+
         Intent intent = getIntent();
         searchText = intent.getStringExtra("searchText");   //获得搜索内容
 
         articles = new ArrayList<>();
         searchResultRv = (RecyclerView)findViewById(R.id.rv_search_result);
+        searchResultRv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         adapter = new ArticleAdapter(articles);
         manager = new LinearLayoutManager(this);
         searchResultRv.setLayoutManager(manager);
         searchResultRv.setAdapter(adapter);                 //为RecyclerView设置适配器和布局管理器
+        adapter.setListener(this);                          //设置监听器
 
         i = 0;
         searchResultRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -89,5 +95,19 @@ public class SearchResultActivity extends BaseActivity {
             tipNoInternet();            //提示用户网络连接超时
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClicked(int position) {
+        Intent intent = new Intent(this, ArticleDetailActivity.class);
+        Article article = articles.get(position - 1);
+        if (!article.isRead()){
+            article.setRead(true);                                          //将文章设置为已读
+            adapter.notifyDataSetChanged();                                 //告知适配器数据发生变化
+            SharedPreferencesUtil.outputWithSharePreference                 //将已读文章的title以键值对(title-true)形式存入"have_read"
+                    (this, SharedPreferencesUtil.HAVE_READ_FILE,article.getTitle(),true);
+        }
+        intent.putExtra("link",article.getLink());              //向下一活动传输link
+        startActivity(intent);
     }
 }

@@ -49,7 +49,7 @@ public class Banner extends FrameLayout{
 
             final String url = datas.get(i).getUrl();
             //为图片设置点击事件
-            picture.setOnClickListener(new View.OnClickListener(){
+           picture.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ArticleDetailActivity.class);

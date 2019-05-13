@@ -12,9 +12,9 @@
 
         <ImageButton
             android:id="@+id/ibtn_back"
-            android:layout_gravity="bottom"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="5dp"
             android:background="@color/colorPrimary"
             android:scaleType="centerCrop"
@@ -32,11 +32,12 @@
 
         <ImageButton
             android:id="@+id/ibtn_search"
-            android:layout_gravity="bottom"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="4dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="5dp"
-            android:src="@mipmap/search_big"
+            android:src="@mipmap/search"
             android:scaleType="centerCrop"
             android:background="@color/colorPrimary"
             />

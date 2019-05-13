@@ -23,8 +23,6 @@ public class SearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();                               //隐藏原始标题栏
 
         backIbtn = (ImageButton)findViewById(R.id.ibtn_back);
         searchEt = (EditText)findViewById(R.id.et_search);

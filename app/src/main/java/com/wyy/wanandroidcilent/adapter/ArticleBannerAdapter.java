@@ -36,12 +36,11 @@ public class ArticleBannerAdapter extends ArticleAdapter {
             return viewHolder;
         }
 
-        //其他Item则调用父类方法
         return super.onCreateViewHolder(viewGroup,viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if( position <= mArticleList.size() && position > 0){
             Article article = mArticleList.get(position - 1);
             ViewHolder holder = (ViewHolder)viewHolder;
@@ -49,12 +48,20 @@ public class ArticleBannerAdapter extends ArticleAdapter {
             holder.niceDateTextView.setText(article.getNiceDate());
             holder.titleTextView.setText(article.getTitle());                   //添加文章作者，时间，文章名
             if(article.isRead()){                                               //若是已读，文章名显示为灰色
-                holder.titleTextView.setTextColor(Color.parseColor("#CCCCCC"));
+                holder.titleTextView.setTextColor(Color.parseColor("#8a000000"));
             }else{
                 holder.titleTextView.setTextColor(Color.parseColor("#000000"));
             }
             //添加文章的类型
             holder.chapterNameTextView.setText(article.getChapterName() + "/" + article.getSuperChapterName());
+            holder.articleCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        listener.onClicked(position);
+                    }
+                }
+            });
         }
     }
 
