@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="220dp">
 
-    <ImageView
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/iv_banner"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:scaleType="centerCrop"
-        />
+        android:layout_height="220dp"
+        android:scaleType="centerCrop" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:background="@color/trans_black"
+        >
+
+        <TextView
+            android:id="@+id/tv_banner_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/background_light"
+            />
+
+        <TextView
+            android:id="@+id/tv_banner_page"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/background_light"
+            />
+    </RelativeLayout>
 </FrameLayout>

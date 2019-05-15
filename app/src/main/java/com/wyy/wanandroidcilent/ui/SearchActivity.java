@@ -40,6 +40,10 @@ public class SearchActivity extends BaseActivity {
         searchIbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (StateUtil.isFastClicked()){
+                    return;
+                }
                 //打开搜索结果活动
                 if(StateUtil.isNetworkConnected(SearchActivity.this)) {
                     String searchText = searchEt.getText().toString();

@@ -65,7 +65,8 @@ public class ParaseUtil {
                     JSONObject object = data.getJSONObject(i);
                     String imagePath = object.getString("imagePath");
                     String url = object.getString("url");
-                    BannerData bannerData = new BannerData(imagePath,url);
+                    String title = object.getString("title");
+                    BannerData bannerData = new BannerData(imagePath,url,title);
                     bannerDatas.add(bannerData);
                 }
             }catch(Exception e){

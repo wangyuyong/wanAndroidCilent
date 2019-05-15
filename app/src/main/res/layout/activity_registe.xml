@@ -4,112 +4,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_registe"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        />
-
     <Button
         android:id="@+id/btn_confirm"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:text="确认"
         android:textColor="@color/black"
         android:background="@android:color/holo_red_light"
         />
 
-    <LinearLayout
-        android:id="@+id/linearlayout_registe_password"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_registe_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/linearlayout_registe_repassword">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:text="密码"
-            android:textColor="@color/black"
-            />
+        android:hint="密码"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/til_registe_repassword">
 
         <EditText
             android:id="@+id/ed__registe_password"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:inputType="textPassword"
-            android:hint="请输入6 ~ 12密码"
             android:maxLength="12"
             />
-    </LinearLayout>
+    </android.support.design.widget.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/linearlayout_registe_username"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/TIL_registe_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/linearlayout_registe_password">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:text="用户名"
-            android:textColor="@color/black"
-            />
+        android:hint="用户名"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/til_registe_password">
 
         <EditText
             android:id="@+id/ed__registe_username"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginRight="70dp"
-            android:hint="请输入6 ~ 12为字母或数字"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:maxLength="12"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             />
 
-    </LinearLayout>
+    </android.support.design.widget.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/linearlayout_registe_repassword"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_registe_repassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="确认密码"
         android:layout_above="@id/btn_confirm">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:text="确认密码"
-            android:textColor="@color/black"
-            />
 
         <EditText
             android:id="@+id/ed__registe_repassword"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:inputType="textPassword"
-            android:hint="请再次确认密码"
             android:maxLength="12"
             />
 
-    </LinearLayout>
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/btn_cancel"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_confirm"
         android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_centerHorizontal="true"
         android:text="取消"
         android:textColor="@color/black"

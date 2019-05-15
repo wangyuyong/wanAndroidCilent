@@ -2,9 +2,11 @@ package com.wyy.wanandroidcilent.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -17,6 +19,7 @@ import com.wyy.wanandroidcilent.net.HttpCallBack;
 import com.wyy.wanandroidcilent.utils.HttpUtil;
 import com.wyy.wanandroidcilent.utils.ParaseUtil;
 import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
+import com.wyy.wanandroidcilent.utils.StateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,9 @@ public class SearchResultActivity extends BaseActivity implements OnItemClickLis
 
         toolbar = (Toolbar)findViewById(R.id.toolbar_search_result);
         setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         searchText = intent.getStringExtra("searchText");   //获得搜索内容
@@ -100,7 +106,7 @@ public class SearchResultActivity extends BaseActivity implements OnItemClickLis
     @Override
     public void onClicked(int position) {
         Intent intent = new Intent(this, ArticleDetailActivity.class);
-        Article article = articles.get(position - 1);
+        Article article = articles.get(position);
         if (!article.isRead()){
             article.setRead(true);                                          //将文章设置为已读
             adapter.notifyDataSetChanged();                                 //告知适配器数据发生变化
@@ -109,5 +115,19 @@ public class SearchResultActivity extends BaseActivity implements OnItemClickLis
         }
         intent.putExtra("link",article.getLink());              //向下一活动传输link
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (StateUtil.isFastClicked()){
+            return false;
+        }
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+        }
+        return true;
     }
 }

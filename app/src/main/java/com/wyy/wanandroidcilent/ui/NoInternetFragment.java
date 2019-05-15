@@ -25,6 +25,9 @@ public class NoInternetFragment extends Fragment {
         tryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (StateUtil.isFastClicked()){
+                    return;
+                }
                 if(StateUtil.isNetworkConnected(getActivity())){
                     replaceFragment(new ArticleListFragment());
                 }else{

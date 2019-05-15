@@ -27,6 +27,7 @@ public class HttpUtil {
     //wan android banner api
     public static final String WAN_ANDROID_BANNER_ADRESS = "https://www.wanandroid.com/banner/json";
 
+
     /**
      * 发送Http请求(GET)
      * @param adress(Http地址)

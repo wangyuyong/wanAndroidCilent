@@ -19,8 +19,6 @@ import com.wyy.wanandroidcilent.utils.StateUtil;
 import org.json.JSONObject;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-
-    Toolbar toolbar;
     Button loginBtn;
     Button registerBtn;
     EditText userNameEd;
@@ -31,9 +29,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar_login);
-        setSupportActionBar(toolbar);
 
         loginBtn = (Button)findViewById(R.id.btn_login);
         registerBtn = (Button)findViewById(R.id.btn_register);
@@ -47,6 +42,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        if (StateUtil.isFastClicked()){
+            return;
+        }
         switch (v.getId()){
             case R.id.btn_login:
                 loginPb.setVisibility(View.VISIBLE);    //显示ProssBar

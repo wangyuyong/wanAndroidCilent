@@ -1,8 +1,10 @@
 package com.wyy.wanandroidcilent.ui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -13,11 +15,19 @@ import com.wyy.wanandroidcilent.utils.StateUtil;
 
 public class ArticleDetailActivity extends BaseActivity {
     WebView articleWebView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar_article_detail);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         articleWebView = (WebView)findViewById(R.id.wb_article_detail);
         initWebView();                      //对WebView进行配置
         Intent intent = getIntent();
@@ -39,5 +49,19 @@ public class ArticleDetailActivity extends BaseActivity {
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setAppCacheEnabled(true);                  //设置缓存
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (StateUtil.isFastClicked()){
+            return false;
+        }
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+        }
+        return true;
     }
 }

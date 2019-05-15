@@ -12,13 +12,13 @@ import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.net.HttpCallBack;
 import com.wyy.wanandroidcilent.utils.HttpUtil;
+import com.wyy.wanandroidcilent.utils.StateUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisteActivity extends BaseActivity implements View.OnClickListener {
 
-    Toolbar toolbar;
     EditText userNameEd;
     EditText passwordEd;
     EditText repasswordEd;
@@ -29,9 +29,6 @@ public class RegisteActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registe);
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar_registe);
-        setSupportActionBar(toolbar);
 
         userNameEd = (EditText)findViewById(R.id.ed__registe_username);
         passwordEd = (EditText)findViewById(R.id.ed__registe_password);
@@ -45,6 +42,9 @@ public class RegisteActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        if (StateUtil.isFastClicked()){
+            return;
+        }
         switch (v.getId()){
             case R.id.btn_confirm:
                 registeUser();
