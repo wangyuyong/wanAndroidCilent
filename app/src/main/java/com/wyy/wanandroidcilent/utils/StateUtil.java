@@ -11,10 +11,19 @@ public class StateUtil {
 
     //网络不良的提示信息
     public static final String NET_STATUS = "网络连接不良，请检查您的网络设置";
+
+    //每次刷新的时间间隔
     private static final int REFRESH_LIMIT_TIME = 1000;
+
+    //每次点击的时间间隔
     private static final int CLICK_LIMIT_TIME = 500;
+
+    //最后一次刷新的时间
     private static long lastRefresh;
+
+    //最后一次点击的时间
     private static long lastClickTime;
+
     /**
      * 判断是否有网络
      * @param context
@@ -45,6 +54,10 @@ public class StateUtil {
         }
     }
 
+    /**
+     * 是否过快刷新
+     * @return
+     */
     public static Boolean isFastRefresh(){
         long refreshTime = System.currentTimeMillis();
         if (refreshTime - lastRefresh < REFRESH_LIMIT_TIME){

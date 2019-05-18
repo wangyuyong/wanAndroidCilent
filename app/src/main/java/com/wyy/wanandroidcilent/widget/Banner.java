@@ -35,7 +35,7 @@ public class Banner extends FrameLayout{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case UP_DATA:
-                    bannerVp.setAdapter(adapter);   //代替notifyDataSetChange()修复一些奇怪的BUG
+                    upData();
                     break;
                 default:
                     break;
@@ -73,6 +73,13 @@ public class Banner extends FrameLayout{
         adapter.notifyDataSetChanged();
     }
 
+    private void upData(){
+        bannerVp.setAdapter(adapter);
+        if (datas.size() == bitmaps.size()){
+            //调到中间某个位置
+            bannerVp.setCurrentItem(bitmaps.size() * 100,false);
+        }
+    }
     private void loadPictureFromNet() {
         new Thread(new Runnable() {
             @Override
@@ -93,9 +100,6 @@ public class Banner extends FrameLayout{
                         msg.what = UP_DATA;
                         handler.sendMessage(msg);
                     }
-                    /*Message msg = new Message();
-                    msg.what = UP_DATA;
-                    handler.sendMessage(msg);*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
