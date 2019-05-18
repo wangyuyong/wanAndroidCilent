@@ -1,9 +1,9 @@
 package com.wyy.wanandroidcilent.enity;
 
 public class BannerData {
-    private String imagePath;
-    private String url;
-    private String title;
+    private String imagePath;       //图片路径
+    private String url;             //广告地址
+    private String title;           //广告标题
 
     public BannerData(){}
 

@@ -13,7 +13,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:text="确认"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:background="@android:color/holo_red_light"
         />
 
@@ -85,7 +85,7 @@
         android:layout_marginRight="20dp"
         android:layout_centerHorizontal="true"
         android:text="取消"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:background="@android:color/holo_red_light"
         />
 

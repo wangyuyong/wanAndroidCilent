@@ -49,6 +49,7 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_list, container, false);
 
+        banner = new Banner(getActivity());  //创建Banner
         initBanner();   //初始化Banner
 
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.srf_refresh);
@@ -71,6 +72,7 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
                 //滑到底部，换页
                 if (manager.findLastVisibleItemPosition() == adapter.getItemCount() - 1) {
                     String adress = "https://www.wanandroid.com/article/list/" + i + "/json";
+                    i++;
                     HttpUtil.sendHttpRequest(adress, new DataCallBack());
                 }
             }
@@ -81,13 +83,16 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                if (StateUtil.isFastRefresh()){
+                    refresh.setRefreshing(false);
+                    return;
+                }
                 w = i;                                    //记录i的数据，网络访问失败时，返回i的数据
                 i = 0;                                   //i重置为0
                 //重新请求网络刷新数据
                 String adress = "https://www.wanandroid.com/article/list/" + i + "/json";
                 HttpUtil.sendHttpRequest(adress, new RefreshCallBack());
                 i++;
-
             }
         });
         return view;
@@ -101,7 +106,6 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
                 @Override
                 public void run() {
                     adapter.notifyDataSetChanged();                     //通知适配器数据更改
-                    i++;
                 }
             });
         }
@@ -113,6 +117,7 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
                 public void run() {
                     //通知用户网络连接超时
                     Toast.makeText(getActivity(), HttpUtil.NO_INTERNET, Toast.LENGTH_LONG).show();
+                    i--;
                 }
             });
             e.printStackTrace();
@@ -129,7 +134,6 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
                 public void run() {
                     adapter.notifyDataSetChanged();                     //通知适配器数据更改
                     refresh.setRefreshing(false);                      //刷新结束
-                    i++;
                 }
             });
         }
@@ -151,7 +155,6 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
 
     //初始化Banner
     private void initBanner() {
-        banner = new Banner(getActivity());  //创建Banner
         bannerData = new ArrayList<>();
         bitmaps = new ArrayList<>();
         //发送网络请求
@@ -191,6 +194,7 @@ public class ArticleListFragment extends Fragment implements OnItemClickListener
                     (getActivity(), SharedPreferencesUtil.HAVE_READ_FILE, article.getTitle(), true);
         }
         intent.putExtra("link", article.getLink());              //向下一活动传输link
+        intent.putExtra("title",article.getTitle());            //向下一活动传送标题名
         getActivity().startActivity(intent);
     }
 }

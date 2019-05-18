@@ -40,6 +40,7 @@ public class BannerAdapter extends PagerAdapter {
         TextView page = (TextView)view.findViewById(R.id.tv_banner_page);
         final int pos = bitmaps.size() == 0 ? 0 : position % bitmaps.size();
         imageView.setImageBitmap(bitmaps.get(pos));
+        //注册点击事件
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +49,7 @@ public class BannerAdapter extends PagerAdapter {
                 }
                 Intent intent = new Intent(activity, ArticleDetailActivity.class);
                 intent.putExtra("link",datas.get(pos).getUrl());
+                intent.putExtra("title",datas.get(pos).getUrl());
                 activity.startActivity(intent);
             }
         });

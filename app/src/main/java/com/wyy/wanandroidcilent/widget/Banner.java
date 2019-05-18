@@ -35,7 +35,7 @@ public class Banner extends FrameLayout{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case UP_DATA:
-                    notyfiDataChangeViews();
+                    bannerVp.setAdapter(adapter);   //代替notifyDataSetChange()修复一些奇怪的BUG
                     break;
                 default:
                     break;
@@ -43,6 +43,10 @@ public class Banner extends FrameLayout{
         }
     };
 
+    /**
+     * 构造方法
+     * @param context
+     */
     public Banner(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.widget_banner,this);
@@ -54,6 +58,10 @@ public class Banner extends FrameLayout{
         bannerVp.setAdapter(adapter);
     }
 
+    /**
+     * 传入BannerData数组作为数据源初始化Banner
+     * @param bannerDataList
+     */
     public void init(List<BannerData> bannerDataList){
         datas.clear();
         bitmaps.clear();            //防止容器中有数据
@@ -81,10 +89,13 @@ public class Banner extends FrameLayout{
                         InputStream input = connection.getInputStream();
                         final Bitmap bitmap = BitmapFactory.decodeStream(input);
                         bitmaps.add(bitmap);
+                        Message msg = new Message();
+                        msg.what = UP_DATA;
+                        handler.sendMessage(msg);
                     }
-                    Message msg = new Message();
+                    /*Message msg = new Message();
                     msg.what = UP_DATA;
-                    handler.sendMessage(msg);
+                    handler.sendMessage(msg);*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {

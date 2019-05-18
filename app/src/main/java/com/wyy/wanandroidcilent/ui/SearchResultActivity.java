@@ -46,6 +46,7 @@ public class SearchResultActivity extends BaseActivity implements OnItemClickLis
 
         Intent intent = getIntent();
         searchText = intent.getStringExtra("searchText");   //获得搜索内容
+        actionBar.setTitle(searchText);
 
         articles = new ArrayList<>();
         searchResultRv = (RecyclerView)findViewById(R.id.rv_search_result);

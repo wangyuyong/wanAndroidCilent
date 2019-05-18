@@ -32,6 +32,8 @@ public class ArticleDetailActivity extends BaseActivity {
         initWebView();                      //对WebView进行配置
         Intent intent = getIntent();
         String link = intent.getStringExtra("link");        //得到上一活动传送的数据
+        String title = intent.getStringExtra("title");      //得到文章的标题
+        actionBar.setTitle(title);
         articleWebView.setWebViewClient(new WebViewClient());
         articleWebView.loadUrl(link);
     }

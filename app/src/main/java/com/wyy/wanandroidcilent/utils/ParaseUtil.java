@@ -14,7 +14,7 @@ import java.util.List;
 public class ParaseUtil {
 
     /**
-     * 解析JSON数据
+     * 解析JSON数据,将得到的数据添加到articles数组中
      * @param json
      * @param articles
      * @return
@@ -56,6 +56,11 @@ public class ParaseUtil {
         return true;
     }
 
+    /**
+     * 解析json数据,将数据添加到bannerData中
+     * @param json
+     * @param bannerDatas
+     */
     public static void paraseJSONToBanner(String json, List<BannerData> bannerDatas){
         if(bannerDatas != null){
             try{

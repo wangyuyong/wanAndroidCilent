@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.wyy.wanandroidcilent.R;
@@ -24,6 +25,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText userNameEd;
     EditText passwordEd;
     ProgressBar loginPb;
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
