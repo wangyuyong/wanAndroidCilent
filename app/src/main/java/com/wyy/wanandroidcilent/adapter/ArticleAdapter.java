@@ -1,13 +1,8 @@
 package com.wyy.wanandroidcilent.adapter;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -15,48 +10,49 @@ import android.widget.TextView;
 
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.enity.Article;
-import com.wyy.wanandroidcilent.ui.ArticleDetailActivity;
-import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
+import com.wyy.wanandroidcilent.utils.StateUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //文章列表的适配器
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    public static final int BOTTOM_ITEM = 0;               //item为底部View
-    public static final int NORMAL_ITEM = 1;               //item为正常View
+    //item为底部View
+    public static final int BOTTOM_ITEM = 0;
+    //item为正常View
+    public static final int NORMAL_ITEM = 1;
     protected OnItemClickListener listener;
-    protected List<Article> mArticleList;
-    LinearLayout bottomItem;                                //记录底部item
+    protected List<Article.DataBean.DatasBean> mArticleList;
+    //记录底部item
+    LinearLayout bottomItem;
 
     //正常item的ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        LinearLayout articleCardView;
-        TextView superChapterNameTextView;
-        TextView niceDateTextView;
-        TextView titleTextView;
-        TextView chapterNameTextView;
+        LinearLayout articleLl;
+        TextView superChapterNameTv;
+        TextView niceDateTv;
+        TextView titleTv;
+        TextView chapterNameTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            articleCardView = (LinearLayout) itemView;
-            superChapterNameTextView = (TextView)itemView.findViewById(R.id.tv_article_author);
-            niceDateTextView = (TextView)itemView.findViewById(R.id.tv_article_time);
-            titleTextView = (TextView)itemView.findViewById(R.id.tv_article_title);
-            chapterNameTextView = (TextView)itemView.findViewById(R.id.tv_article_chapter_name);
+            articleLl = (LinearLayout) itemView;
+            superChapterNameTv = itemView.findViewById(R.id.tv_article_author);
+            niceDateTv = itemView.findViewById(R.id.tv_article_time);
+            titleTv = itemView.findViewById(R.id.tv_article_title);
+            chapterNameTv = itemView.findViewById(R.id.tv_article_chapter_name);
         }
     }
 
     //底部item的ViewHolder
     public static class BottomViewHolder extends RecyclerView.ViewHolder{
-        LinearLayout linearLayoutItemBottom;
+        LinearLayout itemBottomLl;
         public BottomViewHolder(View itemView) {
             super(itemView);
-            linearLayoutItemBottom = (LinearLayout)itemView.findViewById(R.id.linear_item_bottom);
+            itemBottomLl = itemView.findViewById(R.id.ll_item_bottom);
         }
     }
 
-    public ArticleAdapter(List<Article> mArticleList) {
+    public ArticleAdapter(List<Article.DataBean.DatasBean> mArticleList) {
         this.mArticleList = mArticleList;
     }
 
@@ -64,37 +60,43 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int viewType) {
         if(viewType == NORMAL_ITEM){
             //如果是正常的item,加载对应的布局并添加监听
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_article,viewGroup,false);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_item_article,viewGroup,false);
             final ViewHolder holder = new ViewHolder(view);
             return holder;
         }else {
             //底部item加载相应的布局
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_item_bottom_view,viewGroup,false);
             BottomViewHolder holder = new BottomViewHolder(view);
-            bottomItem = holder.linearLayoutItemBottom;
+            bottomItem = holder.itemBottomLl;
             return holder;
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
-        if(position < mArticleList.size()){                                      //ViewHolder的位置小于文章的数量，说明不是底部的ViewHolder
-            Article article = mArticleList.get(position);
+        //ViewHolder的位置小于文章的数量，说明不是底部的ViewHolder
+        if(position < mArticleList.size()){
+            Article.DataBean.DatasBean article = mArticleList.get(position);
             ViewHolder holder = (ViewHolder)viewHolder;
-            holder.superChapterNameTextView.setText(article.getAuthor());
-            holder.niceDateTextView.setText(article.getNiceDate());
-            holder.titleTextView.setText(article.getTitle());                   //添加文章作者，时间，文章名
-            if(article.isRead()){                                               //若是已读，文章名显示为灰色
-                holder.titleTextView.setTextColor(Color.parseColor("#8a000000"));
+            holder.superChapterNameTv.setText(article.getAuthor());
+            holder.niceDateTv.setText(article.getNiceDate());
+            //添加文章作者，时间，文章名
+            holder.titleTv.setText(article.getTitle());
+            //若是已读，文章名显示为灰色
+            if(article.isRead()){
+                holder.titleTv.setTextColor(Color.parseColor("#8a000000"));
             }else{
-                holder.titleTextView.setTextColor(Color.parseColor("#000000"));
+                holder.titleTv.setTextColor(Color.parseColor("#000000"));
             }
             //添加文章的类型
-            holder.chapterNameTextView.setText(article.getChapterName() + "/" + article.getSuperChapterName());
+            holder.chapterNameTv.setText(article.getChapterName() + "/" + article.getSuperChapterName());
 
-            holder.articleCardView.setOnClickListener(new View.OnClickListener() {
+            holder.articleLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (StateUtil.isFastClicked()){
+                        return;
+                    }
                     if (listener != null){
                         listener.onClicked(position);
                     }

@@ -4,16 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wyy.wanandroidcilent.widget.CircleImageView
-        android:layout_width="140dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cv_head_portrait"
         android:layout_height="100dp"
+        android:layout_width="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="30dp"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/touxiang"
+        android:src="@mipmap/ic_head_portrait"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="10dp"
         />
-
     <ProgressBar
         android:id="@+id/pb_login"
         android:layout_width="wrap_content"
@@ -31,7 +30,7 @@
         android:layout_marginBottom="15dp">
 
         <EditText
-            android:id="@+id/ed_username"
+            android:id="@+id/edt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
@@ -53,7 +52,7 @@
 
 
         <EditText
-            android:id="@+id/ed_password"
+            android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

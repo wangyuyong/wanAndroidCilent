@@ -1,4 +1,4 @@
-package com.wyy.wanandroidcilent.ui;
+package com.wyy.wanandroidcilent.ui.articledetail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,39 +13,46 @@ import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.utils.StateUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ArticleDetailActivity extends BaseActivity {
-    WebView articleWebView;
+    @BindView(R.id.tb_article_detail)
     Toolbar toolbar;
+    @BindView(R.id.wb_article_detail)
+    WebView articleWb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
+        ButterKnife.bind(this);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar_article_detail);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        articleWebView = (WebView)findViewById(R.id.wb_article_detail);
-        initWebView();                      //对WebView进行配置
+        //对WebView进行配置
+        initWebView();
         Intent intent = getIntent();
-        String link = intent.getStringExtra("link");        //得到上一活动传送的数据
-        String title = intent.getStringExtra("title");      //得到文章的标题
+        //得到上一活动传送的数据
+        String link = intent.getStringExtra("link");
+        //得到文章的标题
+        String title = intent.getStringExtra("title");
         actionBar.setTitle(title);
-        articleWebView.setWebViewClient(new WebViewClient());
-        articleWebView.loadUrl(link);
+        articleWb.setWebViewClient(new WebViewClient());
+        articleWb.loadUrl(link);
     }
 
-    private void initWebView(){
-        WebSettings settings = articleWebView.getSettings();
+    //初始化webView
+    private void initWebView() {
+        WebSettings settings = articleWb.getSettings();
         settings.setJavaScriptEnabled(true);
-
         //设置缓存模式
-        if(StateUtil.isNetworkConnected(this)){
+        if (StateUtil.isNetworkConnected(this)) {
             settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        }else {
+        } else {
             settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
         settings.setDatabaseEnabled(true);
@@ -55,10 +62,11 @@ public class ArticleDetailActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (StateUtil.isFastClicked()){
+        //点击按钮过快
+        if (StateUtil.isFastClicked()) {
             return false;
         }
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;

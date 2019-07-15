@@ -2,9 +2,8 @@ package com.wyy.wanandroidcilent.enity;
 
 import java.util.List;
 
-//文章的实体类
-public class Article {
-
+//项目实体类
+public class Project {
     private DataBean data;
     private int errorCode;
     private String errorMsg;
@@ -124,8 +123,7 @@ public class Article {
             private int userId;
             private int visible;
             private int zan;
-            private List<?> tags;
-            private boolean isRead;
+            private List<TagsBean> tags;
 
             public String getApkLink() {
                 return apkLink;
@@ -311,20 +309,38 @@ public class Article {
                 this.zan = zan;
             }
 
-            public List<?> getTags() {
+            public List<TagsBean> getTags() {
                 return tags;
             }
 
-            public void setTags(List<?> tags) {
+            public void setTags(List<TagsBean> tags) {
                 this.tags = tags;
             }
 
-            public boolean isRead() {
-                return isRead;
-            }
+            public static class TagsBean {
+                /**
+                 * name : 项目
+                 * url : /project/list/1?cid=294
+                 */
 
-            public void setRead(boolean read) {
-                isRead = read;
+                private String name;
+                private String url;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public String getUrl() {
+                    return url;
+                }
+
+                public void setUrl(String url) {
+                    this.url = url;
+                }
             }
         }
     }

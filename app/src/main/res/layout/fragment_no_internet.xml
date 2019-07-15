@@ -29,6 +29,6 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/cry"
+        android:src="@mipmap/ic_cry"
         />
 </RelativeLayout>

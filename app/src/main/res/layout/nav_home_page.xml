@@ -4,11 +4,11 @@
     android:layout_height="180dp"
     android:background="?attr/colorPrimary">
 
-    <com.wyy.wanandroidcilent.widget.CircleImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_head_portrait"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@mipmap/ic_head_portrait"
         android:layout_centerInParent="true"
         />
 

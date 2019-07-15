@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menu_logon"
         android:title="退出登录"
-        android:icon="@mipmap/logon"
+        android:icon="@mipmap/ic_logon"
         />
 
 </menu>

@@ -1,39 +1,111 @@
 package com.wyy.wanandroidcilent.enity;
 
+import java.util.List;
+
+//广告图数据的实体类
 public class BannerData {
-    private String imagePath;       //图片路径
-    private String url;             //广告地址
-    private String title;           //广告标题
 
-    public BannerData(){}
+    private int errorCode;
+    private String errorMsg;
+    private List<DataBean> data;
 
-    public BannerData(String imagePath, String url,String title){
-        this.imagePath = imagePath;
-        this.url = url;
-        this.title = title;
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
-    public String getUrl() {
-        return url;
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setTitle(String title){
-        this.title = title;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public String getTitle(){
-        return title;
+    public static class DataBean {
+
+        private String desc;
+        private int id;
+        private String imagePath;
+        private int isVisible;
+        private int order;
+        private String title;
+        private int type;
+        private String url;
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
+        }
+
+        public int getIsVisible() {
+            return isVisible;
+        }
+
+        public void setIsVisible(int isVisible) {
+            this.isVisible = isVisible;
+        }
+
+        public int getOrder() {
+            return order;
+        }
+
+        public void setOrder(int order) {
+            this.order = order;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 }

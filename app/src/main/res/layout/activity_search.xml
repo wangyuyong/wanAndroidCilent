@@ -15,7 +15,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <EditText
-            android:id="@+id/et_search"
+            android:id="@+id/edt_search"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
