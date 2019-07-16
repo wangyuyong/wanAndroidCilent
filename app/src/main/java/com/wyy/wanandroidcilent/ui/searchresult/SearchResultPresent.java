@@ -1,52 +1,51 @@
 package com.wyy.wanandroidcilent.ui.searchresult;
 
 import com.wyy.wanandroidcilent.enity.Article;
-import com.wyy.wanandroidcilent.net.HttpService;
-import com.wyy.wanandroidcilent.net.RetrofitManager;
-import com.wyy.wanandroidcilent.ui.homepage.HomePagePresent;
 
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 public class SearchResultPresent implements ResultContract.ResultPresent{
     private ResultContract.ResultView mView;
     private String mSearchContent;
     private int mPage;
-    private HttpService mService;
+    private ResultModel model;
 
     public SearchResultPresent(){
-        RetrofitManager manager = RetrofitManager.getInstance();
-        mService = manager.getService();
+        model = new ResultModel();
     }
 
     //搜索
     @Override
     public void search(String searchContentt) {
         mSearchContent = searchContentt;
-        getSearchResult(mService,mPage);
+        getSearchResult(mPage);
     }
 
     //加载底部数据
     @Override
     public void load() {
         mPage++;
-        getSearchResult(mService,mPage);
+        getSearchResult(mPage);
     }
 
     //获得搜索结果
-    private void getSearchResult(HttpService service,int page){
+    private void getSearchResult(int page){
         //获取列表数据
-        HomePagePresent.operateArticle(service.getReacher(page, mSearchContent), new HomePagePresent.NotifyView() {
-            @Override
-            public void notify(Article article) {
-                List<Article.DataBean.DatasBean> articleList = article.getData().getDatas();
-                //更新ui界面
-                if (articleList.size() == 0){
-                    mView.hideLoading();
-                }else {
-                    mView.showArticleList(articleList);
-                }
-            }
-        });
+        model.getArticle(page,mSearchContent)
+                .subscribe(new Consumer<Article>() {
+                    @Override
+                    public void accept(Article article) throws Exception {
+                        List<Article.DataBean.DatasBean> articleList = article.getData().getDatas();
+                        //更新ui界面
+                        if (articleList.size() == 0){
+                            mView.hideLoading();
+                        }else {
+                            mView.showArticleList(articleList);
+                        };
+                    }
+                });
     }
 
     @Override

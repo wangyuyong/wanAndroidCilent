@@ -7,6 +7,8 @@ import com.wyy.wanandroidcilent.enity.BannerData;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public interface HomePageContract {
     interface HomePageView extends BaseView{
 
@@ -34,5 +36,13 @@ public interface HomePageContract {
 
         //下滑更新数据
         void upData();
+    }
+
+    interface HomePageModel{
+        //获得文章列表数据
+        Observable<Article> getArticleData(int page);
+
+        //获得banner数据
+        Observable<BannerData> getBannerData();
     }
 }

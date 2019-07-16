@@ -1,7 +1,11 @@
 package com.wyy.wanandroidcilent.ui.registe;
 
+import com.wyy.wanandroidcilent.base.BaseModel;
 import com.wyy.wanandroidcilent.base.BasePresent;
 import com.wyy.wanandroidcilent.base.BaseView;
+import com.wyy.wanandroidcilent.enity.Validation;
+
+import io.reactivex.Observable;
 
 public interface RegisteContract {
     interface RegisteView extends BaseView{
@@ -29,5 +33,11 @@ public interface RegisteContract {
 
         //注册逻辑
         void registe();
+    }
+
+    interface RegisteModel extends BaseModel{
+
+        //发送请求注册信息
+        Observable<Validation> requestRegiste(String userName,String password,String repassword);
     }
 }

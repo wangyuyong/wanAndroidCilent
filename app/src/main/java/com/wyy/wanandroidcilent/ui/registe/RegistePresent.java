@@ -1,28 +1,25 @@
 package com.wyy.wanandroidcilent.ui.registe;
 
-import android.app.Notification;
-
 import com.wyy.wanandroidcilent.enity.Validation;
-import com.wyy.wanandroidcilent.net.HttpService;
-import com.wyy.wanandroidcilent.net.RetrofitManager;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-
 
 public class RegistePresent implements RegisteContract.RegistePresent {
     RegisteContract.RegisteView view;
+    RegisteContract.RegisteModel model;
+
+    public RegistePresent(){
+        model = new RegisteModel();
+    }
 
     //注册逻辑
     @Override
     public void registe() {
-        RetrofitManager registeManager = RetrofitManager.getInstance();
-        HttpService registeService = registeManager.getService();
+        String userName = view.getUserName();
+        String password = view.getPassword();
+        String repassword = view.getRepassword();
         //发送注册信息
-        registeService.getValidation(view.getUserName(),view.getPassword(),view.getRepassword())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        model.requestRegiste(userName,password,repassword)
                 .subscribe(new Consumer<Validation>() {
                     @Override
                     public void accept(Validation validation) throws Exception {

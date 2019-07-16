@@ -15,20 +15,21 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginPresent implements LoginContract.LoginPresent {
 
     private LoginContract.LoginView view;
+    private LoginContract.LoginModel model;
+
+    public LoginPresent(){
+        model = new LoginModel();
+    }
 
     //处理登录逻辑
     @Override
     public void login() {
-        RetrofitManager loginManager = RetrofitManager.getInstance();
-        HttpService loginServce = loginManager.getService();
         final String userName = view.getUserName();
         final String password = view.getUserPassword();
         //显示加载条
         view.showLoading();
         //访问网络，获得验证信息
-        loginServce.getValidation(userName,password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        model.requestLogin(userName,password)
                 .subscribe(new Consumer<Validation>() {
                     @Override
                     public void accept(Validation validation) throws Exception {
@@ -52,10 +53,7 @@ public class LoginPresent implements LoginContract.LoginPresent {
     //将用户名和密码保存至本地，用于下次自动登录
     @Override
     public void saveUserInformation(String userName,String password) {
-        SharedPreferencesUtil.outputWithSharePreference(MyApplication.getContext(),
-                Const.CONST_USER,Const.CONST_USER_NAME,userName);
-        SharedPreferencesUtil.outputWithSharePreference(MyApplication.getContext(),
-                Const.CONST_USER,Const.CONST_PASSWORD,password);
+        model.save(userName,password);
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.wyy.wanandroidcilent.ui.login;
 
+import com.wyy.wanandroidcilent.base.BaseModel;
 import com.wyy.wanandroidcilent.base.BasePresent;
 import com.wyy.wanandroidcilent.base.BaseView;
+import com.wyy.wanandroidcilent.enity.Validation;
+
+import io.reactivex.Observable;
 
 public interface LoginContract {
 
@@ -36,5 +40,13 @@ public interface LoginContract {
 
         //保存登录信息
         void saveUserInformation(String userName,String password);
+    }
+
+    interface LoginModel extends BaseModel{
+        //请求登录
+        Observable<Validation> requestLogin(String userName, String password);
+
+        //保存用户信息
+        void save(String userName,String password);
     }
 }
