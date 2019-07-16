@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wyy.wanandroidcilent.Const;
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.adapter.ArticleBannerAdapter;
 import com.wyy.wanandroidcilent.adapter.OnItemClickListener;
@@ -20,6 +21,7 @@ import com.wyy.wanandroidcilent.app.MyApplication;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.enity.BannerData;
 import com.wyy.wanandroidcilent.ui.articledetail.ArticleDetailActivity;
+import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 import com.wyy.wanandroidcilent.utils.StateUtil;
 
 import java.util.ArrayList;
@@ -115,13 +117,16 @@ public class HomePageFragment extends Fragment implements HomePageContract.HomeP
         adapter = new ArticleBannerAdapter(articleList);
         manager = new LinearLayoutManager(MyApplication.getContext());
         articleListRv.setLayoutManager(manager);
-        articleListRv.setAdapter(adapter);       //获取RecyclerView实例，添加适配器和布局管理器
+        //获取RecyclerView实例，添加适配器和布局管理器
+        articleListRv.setAdapter(adapter);
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onClicked(int position) {
+                Article.DataBean.DatasBean article = articleList.get(position - 1);
                 Intent intent = new Intent(getActivity(),ArticleDetailActivity.class);
-                intent.putExtra("link",articleList.get(position - 1).getLink());
-                intent.putExtra("title",articleList.get(position - 1).getTitle());
+                SharedPreferencesUtil.outputWithSharePreference(getActivity(), Const.CONST_HAVE_READ_FILE,article.getTitle(),true);
+                intent.putExtra("link",article.getLink());
+                intent.putExtra("title",article.getTitle());
                 startActivity(intent);
             }
         });          //设置监听

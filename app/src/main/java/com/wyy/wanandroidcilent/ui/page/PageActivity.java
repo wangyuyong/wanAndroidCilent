@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.wyy.wanandroidcilent.Const;
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.adapter.GuideAdapter;
 import com.wyy.wanandroidcilent.base.BaseActivity;
@@ -39,15 +40,15 @@ public class PageActivity extends BaseActivity {
     private FragmentPagerAdapter adapter;
 
     @BindView(R.id.tb_home_page)
-    Toolbar tbHomePage;
+    Toolbar homePageTb;
     @BindView(R.id.nav_slide)
-    NavigationView navSlide;
+    NavigationView slideNav;
     @BindView(R.id.dl_slide_menu)
-    DrawerLayout dlSlideMenu;
+    DrawerLayout slideMenuDl;
     @BindView(R.id.vp_guide)
-    ViewPager vpGuide;
+    ViewPager guideVp;
     @BindView(R.id.bnv_guide)
-    BottomNavigationView bnvGuide;
+    BottomNavigationView guideBnv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +56,21 @@ public class PageActivity extends BaseActivity {
         setContentView(R.layout.activity_page);
         ButterKnife.bind(this);
 
-        setSupportActionBar(tbHomePage);
+        setSupportActionBar(homePageTb);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);  //设置滑动菜单
+        //设置滑动菜单
+        actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
         init();
 
-        navSlide.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        slideNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.menu_logon:
-                        logon();    //退出登录
+                        //退出登录
+                        logon();
                         break;
                     default:
                 }
@@ -86,11 +89,13 @@ public class PageActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                dlSlideMenu.openDrawer(GravityCompat.START);  //打开滑动菜单
+                //打开滑动菜单
+                slideMenuDl.openDrawer(GravityCompat.START);
                 break;
             case R.id.search:
                 Intent intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);      //进入搜索界面
+                //进入搜索界面
+                startActivity(intent);
                 break;
             default:
         }
@@ -100,10 +105,10 @@ public class PageActivity extends BaseActivity {
     //退出登录
     private void logon() {
         //从本地中删除用户信息
-        SharedPreferencesUtil.deleteWithSharePreference(this, SharedPreferencesUtil.CONST_USER,
-                SharedPreferencesUtil.CONST_USER_NAME);
-        SharedPreferencesUtil.deleteWithSharePreference(this, SharedPreferencesUtil.CONST_USER,
-                SharedPreferencesUtil.CONST_PASSWORD);
+        SharedPreferencesUtil.deleteWithSharePreference(this, Const.CONST_USER,
+                Const.CONST_USER_NAME);
+        SharedPreferencesUtil.deleteWithSharePreference(this, Const.CONST_USER,
+                Const.CONST_PASSWORD);
 
         //返回登录界面
         Intent intent = new Intent(this, LoginActivity.class);
@@ -120,11 +125,11 @@ public class PageActivity extends BaseActivity {
         fragments.add(new AboutFragment());
         //添加适配器
         adapter = new GuideAdapter(getSupportFragmentManager(),fragments);
-        vpGuide.setAdapter(adapter);
+        guideVp.setAdapter(adapter);
         //设置缓存
-        vpGuide.setOffscreenPageLimit(2);
+        guideVp.setOffscreenPageLimit(2);
         //添加监听
-        vpGuide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        guideVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
@@ -132,7 +137,7 @@ public class PageActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
-                bnvGuide.getMenu().getItem(i).setChecked(true);
+                guideBnv.getMenu().getItem(i).setChecked(true);
             }
 
             @Override
@@ -140,18 +145,18 @@ public class PageActivity extends BaseActivity {
 
             }
         });
-        bnvGuide.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        guideBnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.bnv_home_page:
-                        vpGuide.setCurrentItem(0);
+                        guideVp.setCurrentItem(0);
                         break;
                     case R.id.bnv_project:
-                        vpGuide.setCurrentItem(1);
+                        guideVp.setCurrentItem(1);
                         break;
                     case R.id.bnv_about:
-                        vpGuide.setCurrentItem(2);
+                        guideVp.setCurrentItem(2);
                         break;
                     default:
                 }

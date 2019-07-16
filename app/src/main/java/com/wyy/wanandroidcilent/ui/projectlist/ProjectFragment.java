@@ -51,12 +51,14 @@ public class ProjectFragment extends Fragment implements ProjectContract.Project
         return view;
     }
 
+    //展示项目列表
     @Override
     public void showProject(List<Project.DataBean.DatasBean> project) {
         mProjectList.addAll(project);
         projectAdapter.notifyDataSetChanged();
     }
 
+    //初始化滑动组件
     public void initRecyclerView(){
         mProjectList = new ArrayList<>();
         projectAdapter = new ProjectAdapter(mProjectList);

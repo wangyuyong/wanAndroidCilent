@@ -55,9 +55,10 @@ public class ArticleDetailActivity extends BaseActivity {
         } else {
             settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
+        //设置缓存
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);
-        settings.setAppCacheEnabled(true);                  //设置缓存
+        settings.setAppCacheEnabled(true);
     }
 
     @Override

@@ -3,12 +3,9 @@ package com.wyy.wanandroidcilent.ui.searchresult;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.net.HttpService;
 import com.wyy.wanandroidcilent.net.RetrofitManager;
+import com.wyy.wanandroidcilent.ui.homepage.HomePagePresent;
 
 import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class SearchResultPresent implements ResultContract.ResultPresent{
     private ResultContract.ResultView mView;
@@ -37,20 +34,19 @@ public class SearchResultPresent implements ResultContract.ResultPresent{
 
     //获得搜索结果
     private void getSearchResult(HttpService service,int page){
-        service.getReacher(page, mSearchContent)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Article>() {
-                    @Override
-                    public void accept(Article article) throws Exception {
-                        List<Article.DataBean.DatasBean> datasBeanList = article.getData().getDatas();
-                        if (datasBeanList.size() == 0){
-                            mView.hideLoading();
-                        }else {
-                            mView.showArticleList(datasBeanList);
-                        }
-                    }
-                });
+        //获取列表数据
+        HomePagePresent.operateArticle(service.getReacher(page, mSearchContent), new HomePagePresent.NotifyView() {
+            @Override
+            public void notify(Article article) {
+                List<Article.DataBean.DatasBean> articleList = article.getData().getDatas();
+                //更新ui界面
+                if (articleList.size() == 0){
+                    mView.hideLoading();
+                }else {
+                    mView.showArticleList(articleList);
+                }
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,9 @@
 package com.wyy.wanandroidcilent.enity;
 
+import com.wyy.wanandroidcilent.Const;
+import com.wyy.wanandroidcilent.app.MyApplication;
+import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
+
 import java.util.List;
 
 //文章的实体类
@@ -325,6 +329,17 @@ public class Article {
 
             public void setRead(boolean read) {
                 isRead = read;
+            }
+
+            //读取本地总存放的已读文章标题，并将已读文章的isRead字段设置为true
+            public static void setYouHaveRead(Article article){
+                List<Article.DataBean.DatasBean> datasBeanList = article.getData().getDatas();
+                for (int i = 0; i < datasBeanList.size(); i++){
+                    Article.DataBean.DatasBean readArticle = datasBeanList.get(i);
+                    String title = readArticle.getTitle();
+                    boolean isRead = SharedPreferencesUtil.getBooleanWithSharePreference(MyApplication.getContext(), Const.CONST_HAVE_READ_FILE,title);
+                    readArticle.setRead(isRead);
+                }
             }
         }
     }

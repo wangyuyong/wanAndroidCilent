@@ -13,17 +13,20 @@ public class ProjectPresent implements ProjectContract.ProjectPresent {
     ProjectContract.ProjectView view;
     int page;
 
+    //加载项目列表
     @Override
     public void load() {
         getProjectList(page);
     }
 
+    //底部加载
     @Override
     public void bottomLoad() {
         page++;
         getProjectList(page);
     }
 
+    //获得项目列表数据
     private void getProjectList(int mPage){
         RetrofitManager manager = RetrofitManager.getInstance();
         HttpService service = manager.getService();

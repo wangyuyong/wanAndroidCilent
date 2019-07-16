@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.wyy.wanandroidcilent.Const;
 import com.wyy.wanandroidcilent.R;
 import com.wyy.wanandroidcilent.adapter.ArticleAdapter;
 import com.wyy.wanandroidcilent.adapter.OnItemClickListener;
 import com.wyy.wanandroidcilent.base.BaseActivity;
 import com.wyy.wanandroidcilent.enity.Article;
 import com.wyy.wanandroidcilent.ui.articledetail.ArticleDetailActivity;
+import com.wyy.wanandroidcilent.utils.SharedPreferencesUtil;
 import com.wyy.wanandroidcilent.utils.StateUtil;
 
 import java.util.ArrayList;
@@ -101,13 +103,16 @@ public class SearchResultActivity extends BaseActivity implements ResultContract
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onClicked(int position) {
+                Article.DataBean.DatasBean article = articles.get(position);
+                SharedPreferencesUtil.outputWithSharePreference(SearchResultActivity.this, Const.CONST_HAVE_READ_FILE,article.getTitle(),true);
                 Intent intent = new Intent(SearchResultActivity.this, ArticleDetailActivity.class);
-                intent.putExtra("link",articles.get(position).getLink());
-                intent.putExtra("title",articles.get(position).getTitle());
+                intent.putExtra("link",article.getLink());
+                intent.putExtra("title",article.getTitle());
                 startActivity(intent);
             }
         });
 
+        //添加滑动监听器
         searchResultRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

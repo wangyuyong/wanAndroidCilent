@@ -73,11 +73,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
         //ViewHolder的位置小于文章的数量，说明不是底部的ViewHolder
         if(position < mArticleList.size()){
             Article.DataBean.DatasBean article = mArticleList.get(position);
-            ViewHolder holder = (ViewHolder)viewHolder;
+            final ViewHolder holder = (ViewHolder)viewHolder;
             holder.superChapterNameTv.setText(article.getAuthor());
             holder.niceDateTv.setText(article.getNiceDate());
             //添加文章作者，时间，文章名
@@ -97,6 +97,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if (StateUtil.isFastClicked()){
                         return;
                     }
+                    holder.titleTv.setTextColor(Color.parseColor("#8a000000"));
                     if (listener != null){
                         listener.onClicked(position);
                     }

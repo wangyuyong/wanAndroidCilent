@@ -8,10 +8,6 @@ import android.widget.Toast;
 import com.wyy.wanandroidcilent.app.MyApplication;
 
 public class StateUtil {
-
-    //网络不良的提示信息
-    public static final String NET_STATUS = "网络连接不良，请检查您的网络设置";
-
     //每次刷新的时间间隔
     private static final int REFRESH_LIMIT_TIME = 1000;
 

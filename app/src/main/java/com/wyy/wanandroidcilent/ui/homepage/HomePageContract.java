@@ -34,8 +34,5 @@ public interface HomePageContract {
 
         //下滑更新数据
         void upData();
-
-        //保存文章阅读记录
-        void savieAticleHistory(String title,boolean isRead);
     }
 }

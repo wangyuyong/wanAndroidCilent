@@ -16,9 +16,12 @@ import com.wyy.wanandroidcilent.utils.StateUtil;
 
 import java.util.List;
 
+//项目列表的适配器
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
 
+    //项目列表的数据源
     private List<Project.DataBean.DatasBean> mprojectList;
+    //列表每个元素的监听器
     private OnItemClickListener listener;
 
     public ProjectAdapter(List<Project.DataBean.DatasBean> projectList) {
@@ -54,8 +57,11 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         String imagPath = mprojectList.get(i).getEnvelopePic();
         String projectTitle = mprojectList.get(i).getTitle();
         String projectContent = mprojectList.get(i).getAuthor() + "/" + mprojectList.get(i).getAuthor();
+        //设置项目标题
         projectViewHolder.titleTv.setText(projectTitle);
+        //设置项目内容
         projectViewHolder.contentTv.setText(projectContent);
+        //设置点击事件
         projectViewHolder.projectRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +73,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 }
             }
         });
+        //加载项目图片
         Glide.with(projectViewHolder.imageView).load(imagPath).into(projectViewHolder.imageView);
     }
 

@@ -1,5 +1,6 @@
 package com.wyy.wanandroidcilent.ui.login;
 
+import com.wyy.wanandroidcilent.Const;
 import com.wyy.wanandroidcilent.app.MyApplication;
 import com.wyy.wanandroidcilent.enity.Validation;
 import com.wyy.wanandroidcilent.net.HttpService;
@@ -48,11 +49,13 @@ public class LoginPresent implements LoginContract.LoginPresent {
                 });
     }
 
-    //将用户名和密码保存至本地，用于下次登录
+    //将用户名和密码保存至本地，用于下次自动登录
     @Override
     public void saveUserInformation(String userName,String password) {
-        SharedPreferencesUtil.outputWithSharePreference(MyApplication.getContext(),SharedPreferencesUtil.CONST_USER,SharedPreferencesUtil.CONST_USER_NAME,userName);
-        SharedPreferencesUtil.outputWithSharePreference(MyApplication.getContext(),SharedPreferencesUtil.CONST_USER,SharedPreferencesUtil.CONST_PASSWORD,password);
+        SharedPreferencesUtil.outputWithSharePreference(MyApplication.getContext(),
+                Const.CONST_USER,Const.CONST_USER_NAME,userName);
+        SharedPreferencesUtil.outputWithSharePreference(MyApplication.getContext(),
+                Const.CONST_USER,Const.CONST_PASSWORD,password);
     }
 
     @Override

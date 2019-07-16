@@ -6,11 +6,6 @@ import android.content.SharedPreferences;
 //用sharedPreferences存储数据
 public class SharedPreferencesUtil {
 
-    public static final String CONST_HAVE_READ_FILE = "have_read";                                        //已读文章的文章名存储的文件夹
-    public static final String CONST_USER = "user";                                                       //存放用户名和密码的文件夹
-    public static final String CONST_USER_NAME = "username";
-    public static final String CONST_PASSWORD = "password";
-
     /**
      * 将key-value存入file
      * @param context
